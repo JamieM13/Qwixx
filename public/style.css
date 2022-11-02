@@ -1,0 +1,18 @@
+.diceGroup {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+.scoreCards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.player{
+    display: flex;
+    flex-direction: column;
+}
