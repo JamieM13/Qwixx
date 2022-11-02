@@ -40,3 +40,16 @@ window.addEventListener('load', function () {
     //     socket.emit('msg', msgObj);
     // });
 });
+
+let playerCount = 1;
+let player = playerCount;
+let roll = document.getElementsByClassName('rollDice');
+let pass = document.getElementsByClassName('passDice');
+
+
+
+function takeTurn() {
+    passDice.style="display: ''";
+}
+
+takeTurn();
