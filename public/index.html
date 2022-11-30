@@ -12,8 +12,34 @@
 
 <body>
     <h1> Qwixx</h1>
+    <div id="rules" class="rules">
+        <h2> Object & Rules</h2>
+        <p> Score the most points by crossing off the as many numbers on your scorecard as possible.</p>
+        <p> Numbers on your scorecard may ONLY be checked off from left to right. You do not have to start with the first number on the left, but if you skip any numbers, they cannot be checked off later.</p>
+    <br>
+    <h2> How To Play</h2>
+    <p> 1. The active player rolls all 6 dice.</p>
+    <p> 2. All players may (but are not required to) cross out the number that is the SUM OF THE WHITE DICE anywhere on their scorecard. </p>
+    <p> 3. ONLY the active player may then (but is not required to) add one white die with any colored die, and cross out the number corresponding to this sum in the color row that matches the chosen colored die.</p>
+    <p> 3. If the active player does not cross off at least one number, the must cross out one of the penalty boxes.</p>
+    <p> 4. The next player becomes the active player.</p>
+    <p> <b> Locking a row.</b> Once you have at least 5 X's in a row, you may cross off the last number (12 or 2) in that row when the correct dice are rolled. If you do, you may cross off the "lock row" space as well. Once a row is locked, that color die is out of play and NOBODY may cross off any more spaces in the corresponding color row. </p> 
+
+    <p> <b>Ending the game.</b> The game ends when 2 rows are locked or when one player takes 4 penalties.</p>
+    
+    </div>
+    <div> 
+        <button id="hideRules" class="hideRules">Hide Rules</button> 
+        <button id="showRules" class="showRules">Show Rules</button>
+    </div>
+
+
     <div id="containers" class="containers">
         <div id="leftContainer" class="leftContainer">
+            
+
+
+
             <div id="diceGroup" class="diceGroup">
                 <div id="dicePair1" class="dicePair dicePair1">
                     <tag id="firstDie"> X </tag>
@@ -36,7 +62,7 @@
             </div>
 
 
-            <br> <br> <br> <br> <br> <br>
+            <br> <br> 
             <div id="myScoreCard" class="scoreCards primary">
                 <div id="player1" class="player">
                     <h2> Player 1</h2>
@@ -49,6 +75,7 @@
             </div>
 
         </div>
+
         <div id="rightContainer" class="rightContainer">
             <div id="otherCards" class="scoreCards secondary">
                 <div id="player2" class="player">

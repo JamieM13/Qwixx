@@ -1,10 +1,16 @@
 .containers {
     display: flex;
     flex-direction: row;
+    padding: 50px;
 }
 
 .leftContainer {
-    width: 60%
+    width: 50%;
+    padding: 50px;
+}
+
+.rightContainer {
+    width: 50%;
 }
 
 .diceGroup {
@@ -14,16 +20,17 @@
     justify-content: space-around;
 
 
+
 }
 
 .dicePair {
-    height: 40px;
-    width: 40px;
-    padding: 30px;
+    height: 15px;
+    width: 15px;
+    padding: 15px;
     margin: 50px auto;
     border: 1px solid gray;
     border-radius: 10px;  
-    font-size:60px;
+    font: size 10px;
 }
 
 .dicePair3 {
@@ -58,20 +65,38 @@ table {
     width: 100%;
     border-collapse: collapse;
     border: 3px solid purple;
+
+
+   
+  }
+
+  tr {
+    height: 35px;
+    padding-left: 35px;
+    
+  }
+
+  td {
+    justify-items: space-around;
+    padding-inline: 5px;
   }
 
   .redRow {
     background-color: red;
+   
   }
 
   .yelRow {
     background-color: yellow;
+    
   }
 
   .greenRow {
     background-color: green;
+ 
   }
 
   .blueRow {
     background-color: blue;
+
   }

@@ -83,8 +83,12 @@ function createScoreCard(player) {
                 for (j=2; j<14; j++){
                     let cell = document.createElement('td');
                     let button = document.createElement('button');
-                    button.innerHTML = j;
-                    button.id = player + "_" + i + "_" + j;
+                    let num = j;
+                    if (num == 13){
+                        num = "lock row";
+                    }
+                    button.innerHTML = num;
+                    button.id = player + "_" + i + "_" + num;
                     button.addEventListener("click", markButton);
                     cell.appendChild(button);
                     row.appendChild(cell);
@@ -93,8 +97,12 @@ function createScoreCard(player) {
                 for (j=13; j>1; j--){
                     let cell = document.createElement('td');
                     let button = document.createElement('button');
-                    button.innerHTML = j;
-                    button.id = player + "_" + i + "_" + j;
+                    let num = j-1;
+                    if (num == 1){
+                        num = "lock row";
+                    }
+                    button.innerHTML = num;
+                    button.id = player + "_" + i + "_" + num;
                     button.addEventListener("click", markButton);
                     cell.appendChild(button);
                     row.appendChild(cell);
@@ -205,6 +213,22 @@ function changePassStatus() {
     let data = { "currentPlayer": playerCount };
     socket.emit('msg', data);
 }
+
+let hideRules = document.getElementById('hideRules');
+let showRules = document.getElementById('showRules');
+let rules = document.getElementById('rules');
+hideRules.addEventListener("click", hideTheRules());
+showRules.addEventListener("click", showTheRules());
+rules.style.visibility = "visible";
+
+function hideTheRules(){
+    rules.style.visibility = "hidden";
+}
+
+function showTheRules(){
+    rules.style.visibility = "visible";
+}
+
 
 socket.on('updateDice', function (diceNums) {
     console.log("update dice " + diceNums);
