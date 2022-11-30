@@ -17,6 +17,7 @@ io = new io.Server(server);
 //Listen for individual clients/users to connect
 io.sockets.on('connection', function(socket) {
     console.log("We have a new client: " + socket.id);
+    // io.sockets.emit('msg', socket.id);
 
     //Listen for a message named 'msg' from this client
     socket.on('msg', function(data) {
@@ -33,6 +34,18 @@ io.sockets.on('connection', function(socket) {
         //Send a response to just this client
         // socket.emit('msg', data);
     });
+
+    //when the server gets the rolled dice object from the client, push it back out to all the other sockets
+    socket.on('diceRolled', function(diceNums){
+        console.log("update dice " + diceNums);
+        io.sockets.emit('updateDice', diceNums);
+    });
+
+    socket.on('marks', function(id) {
+        io.sockets.emit('updateMarks', id);
+        console.log(id);
+    });
+
 
     //Listen for this client to disconnect
     socket.on('disconnect', function() {

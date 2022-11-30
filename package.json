@@ -1,17 +1,25 @@
 {
   "name": "quixx",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo "Error: no test specified" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "socket.io": "^4.3.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamieM13/Qwixx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JamieM13/Qwixx/issues"
+  },
+  "homepage": "https://github.com/JamieM13/Qwixx#readme",
+  "description": ""
 }

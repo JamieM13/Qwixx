@@ -1,18 +1,77 @@
+.containers {
+    display: flex;
+    flex-direction: row;
+}
+
+.leftContainer {
+    width: 60%
+}
+
 .diceGroup {
 
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 
+
+}
+
+.dicePair {
+    height: 40px;
+    width: 40px;
+    padding: 30px;
+    margin: 50px auto;
+    border: 1px solid gray;
+    border-radius: 10px;  
+    font-size:60px;
+}
+
+.dicePair3 {
+    background-color: red;
+}
+
+.dicePair4 {
+    background-color: yellow;
+}
+
+.dicePair5 {
+    background-color: green;
+}
+
+.dicePair6 {
+    background-color: blue;
 }
 
 .scoreCards {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
 }
 
-.player{
+.buttonGroup {
     display: flex;
     flex-direction: column;
 }
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid purple;
+  }
+
+  .redRow {
+    background-color: red;
+  }
+
+  .yelRow {
+    background-color: yellow;
+  }
+
+  .greenRow {
+    background-color: green;
+  }
+
+  .blueRow {
+    background-color: blue;
+  }
