@@ -46,6 +46,11 @@ io.sockets.on('connection', function(socket) {
         console.log(id);
     });
 
+    socket.on('unMarks', function(id) {
+        io.sockets.emit('updateUnMarks',id);
+        console.log("unmark me");
+    });
+
 
     //Listen for this client to disconnect
     socket.on('disconnect', function() {

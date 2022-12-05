@@ -15,45 +15,30 @@ window.addEventListener('load', function () {
     createScoreCard(4);
 
 
-
-
-
-    // /* --- Code to RECEIVE a socket message from the server --- */
-    // let chatBox = document.getElementById('chat-box-msgs');
-
     // //Listen for messages named 'msg' from the server
     socket.on('msg', function (data) {
         console.log("Message arrived!");
         console.log(data);
-
-        //     //Create a message string and page element
-        //     let msgEl = document.createElement('p');
-        //     msgEl.innerHTML = data;
-        // //     //Add the element with the message to the page
-        //     diceButtons.appendChild(msgEl);
         document.getElementById('player' + data.currentPlayer).appendChild(
             document.getElementById('diceButtons')
         );
         playerCount = data.currentPlayer;
     });
 
-    socket.on('updateMarks', function(id){
+    socket.on('updateMarks', function (id) {
         document.getElementById(id).innerHTML = "X";
+        hideSkips(id);
     });
 
-    // /* --- Code to SEND a socket message to the Server --- */
-    // let nameInput = document.getElementById('name-input')
-    // let msgInput = document.getElementById('msg-input');
-    // let sendButton = document.getElementById('send-button');
-
-    // sendButton.addEventListener('click', function () {
-    //     let curName = nameInput.value;
-    //     let curMsg = msgInput.value;
-    //     let msgObj = { "name": curName, "msg": curMsg };
-
-    //     //Send the message object to the server
-    //     socket.emit('msg', msgObj);
-    // });
+    socket.on('updateUnMarks', function (id) {
+        // id = this.id;
+        idParts = id.split('_');
+        player = idParts[0];
+        i = idParts[1];
+        j = idParts[2];
+        document.getElementById(id).innerHTML = buttonText(i, j);
+        reverseMove(id);
+    })
 });
 
 function createScoreCard(player) {
@@ -75,48 +60,87 @@ function createScoreCard(player) {
         color: 'blue',
         class: 'blueRow',
     });
-        for (i = 0; i < scoreCard.length; i++) {
-            let row = document.createElement('tr');
-            row.className = scoreCard[i].class;
-            myScoreCard.appendChild(row);
-            if (i < 2){
-                for (j=2; j<14; j++){
-                    let cell = document.createElement('td');
-                    let button = document.createElement('button');
-                    let num = j;
-                    if (num == 13){
-                        num = "lock row";
-                    }
-                    button.innerHTML = num;
-                    button.id = player + "_" + i + "_" + num;
-                    button.addEventListener("click", markButton);
-                    cell.appendChild(button);
-                    row.appendChild(cell);
-                }
-            } else {
-                for (j=13; j>1; j--){
-                    let cell = document.createElement('td');
-                    let button = document.createElement('button');
-                    let num = j-1;
-                    if (num == 1){
-                        num = "lock row";
-                    }
-                    button.innerHTML = num;
-                    button.id = player + "_" + i + "_" + num;
-                    button.addEventListener("click", markButton);
-                    cell.appendChild(button);
-                    row.appendChild(cell);
-                }
+    for (i = 0; i < scoreCard.length; i++) {
+        let row = document.createElement('tr');
+        row.className = scoreCard[i].class;
+        myScoreCard.appendChild(row);
+        if (i < 5) {
+            for (j = 2; j < 14; j++) {
+                let cell = document.createElement('td');
+                let button = document.createElement('button');
+                button.innerHTML = buttonText(i, j);
+                button.id = player + "_" + i + "_" + j;
+                button.addEventListener("click", markButton);
+                cell.appendChild(button);
+                row.appendChild(cell);
             }
         }
-        document.getElementById('player' + player).appendChild(myScoreCard);
+    }
+    document.getElementById('player' + player).appendChild(myScoreCard);
 }
 
-function markButton(){
+function buttonText(i, j) {
+    if (i > 1) {
+        num = 14 - j;
+    } else {
+        num = j;
+    }
+    if (j == 13) {
+        num = "lock row";
+    }
+    return num;
+}
+
+
+function markButton() {
     console.log("clicked button " + this.id);
-    this.innerHTML = "X";
     let id = this.id;
-    socket.emit('marks', id);
+    let idParts = id.split('_');
+    let player = idParts[0];
+    let i = idParts[1];
+    let j = idParts[2];
+
+    if (this.innerHTML == "X") {
+        this.innerHTML = buttonText(i, j);
+        reverseMove(this.id);
+        socket.emit('unMarks', id);
+    } else {
+        this.innerHTML = "X";
+        hideSkips(this.id);
+        socket.emit('marks', id);
+    }
+}
+
+function hideSkips(id){
+    idParts = id.split('_');
+    player = idParts[0];
+    i = idParts[1];
+    j = idParts[2];
+    for (j = idParts[2]; j > 1; j--) {
+        let button = document.getElementById(player + '_' + i + '_' + j);
+        if (button.innerHTML == 'X') {
+            button.style.visibility = "visible";
+        } else {
+            button.style.visibility = "hidden";
+        }
+
+    }
+}
+
+function reverseMove(id){
+    idParts = id.split('_');
+    player = idParts[0];
+    i = idParts[1];
+    j = idParts[2];
+    for (j = idParts[2] - 1; j > 1; j--) {
+        let button = document.getElementById(player + '_' + i + '_' + j);
+        if (button.innerHTML == 'X') {
+            break;
+        } else {
+            button.style.visibility = "visible";
+        }
+
+    }
 }
 
 
@@ -148,6 +172,7 @@ function rollClicked() {
 function passClicked() {
     resetDice();
     changePassStatus();
+
 }
 
 function throwDice() {
@@ -170,12 +195,15 @@ function showDice() {
 }
 
 function resetDice() {
-    die1.innerHTML = "X";
-    die2.innerHTML = "X";
-    die3.innerHTML = "X";
-    die4.innerHTML = "X";
-    die5.innerHTML = "X";
-    die6.innerHTML = "X";
+    diceNums = {
+        d1: "X",
+        d2: "X",
+        d3: "X",
+        d4: "X",
+        d5: "X",
+        d6: "X"
+    }
+    socket.emit('diceRolled', diceNums);
 }
 
 function changeRollStatus() {
@@ -192,7 +220,7 @@ function changeRollStatus() {
         roll.style.visibility = "hidden";
         pass.style.visibility = "visible";
     }
-    // socket.emit('msg', 'roll');
+    socket.emit('msg', 'roll');
 }
 
 function changePassStatus() {
@@ -221,11 +249,11 @@ hideRules.addEventListener("click", hideTheRules());
 showRules.addEventListener("click", showTheRules());
 rules.style.visibility = "visible";
 
-function hideTheRules(){
+function hideTheRules() {
     rules.style.visibility = "hidden";
 }
 
-function showTheRules(){
+function showTheRules() {
     rules.style.visibility = "visible";
 }
 

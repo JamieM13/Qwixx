@@ -5,54 +5,58 @@
 }
 
 .leftContainer {
-    width: 50%;
+    width: 60%;
     padding: 50px;
 }
 
 .rightContainer {
-    width: 50%;
+    width: 40%;
 }
 
 .diceGroup {
 
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-
+    justify-content: center;
+    padding-left: 200px;
+    padding-right: 200px;
 
 
 }
 
 .dicePair {
-    height: 15px;
-    width: 15px;
-    padding: 15px;
-    margin: 50px auto;
+    height: 20px;
+    width: 20px;
+    padding: 20px;
+    margin: 60px auto;
     border: 1px solid gray;
     border-radius: 10px;  
     font: size 10px;
 }
 
 .dicePair3 {
-    background-color: red;
+    background-color: lightcoral;
 }
 
 .dicePair4 {
-    background-color: yellow;
+    background-color: rgb(255, 255, 129);
 }
 
 .dicePair5 {
-    background-color: green;
+    background-color: seagreen;
+    color: whitesmoke;
 }
 
 .dicePair6 {
-    background-color: blue;
+    background-color: rgb(60, 73, 255);
+    color: whitesmoke;
 }
 
 .scoreCards {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding: 100px;
 }
 
 .buttonGroup {
@@ -71,7 +75,7 @@ table {
   }
 
   tr {
-    height: 35px;
+    height: 50px;
     padding-left: 35px;
     
   }
@@ -79,24 +83,25 @@ table {
   td {
     justify-items: space-around;
     padding-inline: 5px;
+    
   }
 
   .redRow {
-    background-color: red;
+    background-color: lightcoral;
    
   }
 
   .yelRow {
-    background-color: yellow;
+    background-color: rgb(255, 255, 129);
     
   }
 
   .greenRow {
-    background-color: green;
+    background-color: seagreen;
  
   }
 
   .blueRow {
-    background-color: blue;
+    background-color: rgb(58, 71, 255);
 
   }
