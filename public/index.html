@@ -28,76 +28,12 @@
     <p> <b>Ending the game.</b> The game ends when 2 rows are locked or when one player takes 4 penalties.</p>
     
     </div>
-    <div> 
-        <button id="hideRules" class="hideRules">Hide Rules</button> 
-        <button id="showRules" class="showRules">Show Rules</button>
+    <div id="playLink" class="playLink"> 
+        <a href="/game.html"> <h2> Play </h2></a>
     </div>
 
 
-    <div id="containers" class="containers">
-        <div id="leftContainer" class="leftContainer">
-            
 
-
-
-            <div id="diceGroup" class="diceGroup">
-                <div id="dicePair1" class="dicePair dicePair1">
-                    <tag id="firstDie"> X </tag>
-                </div>
-                <div id="dicePair2" class="dicePair dicePair2">
-                    <tag id="secondDie"> X </tag>
-                </div>
-                <div id="dicePair3" class="dicePair dicePair3">
-                    <tag id="thirdDie"> X </tag>
-                </div>
-                <div id="dicePair4" class="dicePair dicePair4">
-                    <tag id="fourthDie"> X </tag>
-                </div>
-                <div id="dicePair5" class="dicePair dicePair5">
-                    <tag id="fifthDie"> X </tag>
-                </div>
-                <div id="dicePair6" class="dicePair dicePair6">
-                    <tag id="sixthDie"> X </tag>
-                </div>
-            </div>
-
-
-            <br> <br> 
-            <div id="myScoreCard" class="scoreCards primary">
-                <div id="position1" class="player">
-                    
-
-                    <div id="diceButtons" class="buttonGroup">
-                        <button class="rollDice" id="rollDice"> Roll the Dice</button>
-                        <button class="passDice" id="passDice"> Pass the Dice</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div id="rightContainer" class="rightContainer">
-            <div id="otherCards" class="scoreCards secondary">
-                <div id="position2" class="player">
-                    
-                    <!-- <button class="rollDice"> Roll the Dice</button>
-            <button class="passDice"> Pass the Dice</button> -->
-                </div>
-                <div id="position3" class="player">
-                    
-                    <!-- <button class="rollDice"> Roll the Dice</button>
-            <button class="passDice"> Pass the Dice</button> -->
-                </div>
-                <div id="position4" class="player">
-                    
-                    <!-- <button class="rollDice"> Roll the Dice</button>
-            <button class="passDice"> Pass the Dice</button> -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script src="app.js"></script>
 </body>
 
 </html>

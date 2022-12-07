@@ -26,6 +26,9 @@ window.addEventListener('load', function () {
                 player = 1;
             }
         }
+        document.getElementById('player_1_Name').appendChild(
+            document.getElementById('diceButtons')
+        );
 
     });
 
@@ -39,10 +42,14 @@ window.addEventListener('load', function () {
     socket.on('msg', function (data) {
         console.log("Message arrived!");
         console.log(data);
-        document.getElementById('player' + data.currentPlayer).appendChild(
-            document.getElementById('diceButtons')
-        );
-        playerCount = data.currentPlayer;
+        if (data != "roll") {
+            position = findPlayerPos(data.currentPlayer);
+            console.log(data.currentPlayer + "_" + position);
+            document.getElementById('player_' + data.currentPlayer + "_Name").appendChild(
+                document.getElementById('diceButtons')
+            );
+            playerCount = data.currentPlayer;
+        }
     });
 
     socket.on('updateMarks', function (id) {
@@ -82,7 +89,7 @@ function createScoreCard(player, position) {
     let myName = document.createElement('h2');
     if (position != 1) {
         myName.innerHTML = "Player" + "_" + player;
-        
+
     }
     myName.id = "player" + "_" + player + "_Name";
     if (position == 1) {
@@ -267,7 +274,7 @@ function buttonText(i, j) {
 }
 
 
-function markButton() {
+function markButton(){
     console.log("clicked button " + this.id);
     let id = this.id;
     let idParts = id.split('_');
@@ -330,6 +337,28 @@ function reverseMove(id) {
 
 let playerCount = 1;
 let player = playerCount;
+
+function findPlayerPos(player) {
+    if (myPlayerNumber == player) {
+        return 1;
+    } else {
+        let searchPlayer = myPlayerNumber;
+        for (pos = 2; pos < 5; pos++) {
+            searchPlayer++;
+            if (searchPlayer > 4) {
+                searchPlayer = 1;
+            }
+            if (searchPlayer == player) {
+                return pos;
+            }
+        }
+
+    }
+
+}
+
+
+
 let die1 = document.getElementById('firstDie');
 let die2 = document.getElementById('secondDie');
 let die3 = document.getElementById('thirdDie');
@@ -414,7 +443,8 @@ function changePassStatus() {
     if (playerCount > 4) {
         playerCount = 1;
     }
-    document.getElementById('player' + playerCount).appendChild(
+    position = findPlayerPos(playerCount);
+    document.getElementById('player_' + playerCount + "_Name").appendChild(
         document.getElementById('diceButtons')
     );
 
@@ -425,12 +455,12 @@ function changePassStatus() {
     socket.emit('msg', data);
 }
 
-let hideRules = document.getElementById('hideRules');
-let showRules = document.getElementById('showRules');
-let rules = document.getElementById('rules');
-hideRules.addEventListener("click", hideTheRules());
-showRules.addEventListener("click", showTheRules());
-rules.style.visibility = "visible";
+// let hideRules = document.getElementById('hideRules');
+// let showRules = document.getElementById('showRules');
+// let rules = document.getElementById('rules');
+// hideRules.addEventListener("click", hideTheRules());
+// showRules.addEventListener("click", showTheRules());
+// rules.style.visibility = "visible";
 
 function hideTheRules() {
     rules.style.visibility = "hidden";

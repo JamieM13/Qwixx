@@ -65,10 +65,10 @@
     
 }
 
-.rollDice {
+.buttonGroup {
     width: 150px;
-    background-color:purple;
-    color: whitesmoke;
+    border: 3px solid greenyellow;
+    
 }
 
 .redInput {
