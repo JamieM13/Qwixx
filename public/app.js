@@ -1,5 +1,5 @@
 let socket = io();
-
+let myPlayerNumber;
 window.addEventListener('load', function () {
 
     //Open and connect socket
@@ -9,11 +9,31 @@ window.addEventListener('load', function () {
         console.log("Connected");
     });
 
-    createScoreCard(1);
-    createScoreCard(2);
-    createScoreCard(3);
-    createScoreCard(4);
 
+
+    socket.on('yourNum', function (yourNum) {
+        console.log("My player number is" + yourNum);
+        let player = yourNum;
+        let position = 1;
+        myPlayerNumber = yourNum;
+
+        for (k = 0; k < 4; k++) {
+            createScoreCard(player, position);
+            console.log(player + "_" + position);
+            player++;
+            position++;
+            if (player > 4) {
+                player = 1;
+            }
+        }
+
+    });
+
+
+    // createScoreCard(1, 1);
+    // createScoreCard(2, 2);
+    // createScoreCard(3, 3);
+    // createScoreCard(4, 4);
 
     // //Listen for messages named 'msg' from the server
     socket.on('msg', function (data) {
@@ -39,9 +59,43 @@ window.addEventListener('load', function () {
         document.getElementById(id).innerHTML = buttonText(i, j);
         reverseMove(id);
     })
+
+    socket.on('updateNames', function (data) {
+        console.log(data);
+        document.getElementById("player_" + data.playerNumber + "_Name").innerHTML = data.playerName;
+    })
 });
 
-function createScoreCard(player) {
+function sendNames() {
+    let data = {
+        playerName: this.value,
+        playerNumber: this.id,
+    };
+    console.log(data);
+
+    socket.emit('names', data);
+}
+
+
+
+function createScoreCard(player, position) {
+    let myName = document.createElement('h2');
+    if (position != 1) {
+        myName.innerHTML = "Player" + "_" + player;
+        
+    }
+    myName.id = "player" + "_" + player + "_Name";
+    if (position == 1) {
+        let myTag = document.createElement('input');
+        myName.appendChild(myTag);
+        myTag.id = player;
+        myTag.placeholder = "Enter your name";
+        myTag.addEventListener('keyup', sendNames);
+    }
+
+
+
+
     let scoreCard = [];
     let myScoreCard = document.createElement('table');
     scoreCard.push({
@@ -100,91 +154,92 @@ function createScoreCard(player) {
 
                 row.appendChild(cell);
             }
-        } else if (i > 4 && i < 6){
+        } else if (i > 4 && i < 6) {
             for (j = 2; j < 14; j++) {
-            let cell = document.createElement('td');
-            if (j == 2){
-                let label = document.createElement('label');
+                let cell = document.createElement('td');
+                if (j == 2) {
+                    let label = document.createElement('label');
                     label.innerHTML = "Row totals";
                     label.id = player + "_" + i + "_" + j;
                     cell.appendChild(label);
-            }else if (j == 3) {
-                let input = document.createElement('input');
-                input.id = "redInput";
-                input.class = "redInput";
-                input.value = 0;
-                input.maxlength="2";
-                input.size="2";
-                cell.appendChild(input);
-            } else if (j==4){
-                let label = document.createElement('label');
-                label.innerHTML = "+";
+                } else if (j == 3) {
+                    let input = document.createElement('input');
+                    input.id = "redInput";
+                    input.class = "redInput";
+                    input.value = 0;
+                    input.maxlength = "2";
+                    input.size = "2";
+                    cell.appendChild(input);
+                } else if (j == 4) {
+                    let label = document.createElement('label');
+                    label.innerHTML = "+";
                     label.id = player + "_" + i + "_" + j;
                     cell.appendChild(label);
-            } else if (j==5){
-                let input = document.createElement('input');
-                input.id = "yelInput";
-                input.value = 0;
-                input.maxlength="2";
-                input.size="2";
-                cell.appendChild(input);
+                } else if (j == 5) {
+                    let input = document.createElement('input');
+                    input.id = "yelInput";
+                    input.value = 0;
+                    input.maxlength = "2";
+                    input.size = "2";
+                    cell.appendChild(input);
 
-            } else if (j==6){
-                let label = document.createElement('label');
-                label.innerHTML = "+";
+                } else if (j == 6) {
+                    let label = document.createElement('label');
+                    label.innerHTML = "+";
                     label.id = player + "_" + i + "_" + j;
                     cell.appendChild(label);
-            } else if (j==7){
-                let input = document.createElement('input');
-                input.id = "greenInput";
-                input.value = 0;
-                input.maxlength="2";
-                input.size="2";
-                cell.appendChild(input);
-            } else if (j==8){
-                let label = document.createElement('label');
-                label.innerHTML = "+";
+                } else if (j == 7) {
+                    let input = document.createElement('input');
+                    input.id = "greenInput";
+                    input.value = 0;
+                    input.maxlength = "2";
+                    input.size = "2";
+                    cell.appendChild(input);
+                } else if (j == 8) {
+                    let label = document.createElement('label');
+                    label.innerHTML = "+";
                     label.id = player + "_" + i + "_" + j;
                     cell.appendChild(label);
-            } else if (j == 9){
-                let input = document.createElement('input');
-                input.id = "blueInput";
-                input.value = 0;
-                input.maxlength="2";
-                input.size="2";
-                cell.appendChild(input);
-            } else if (j==10){
-                let label = document.createElement('label');
-                label.innerHTML = "-";
+                } else if (j == 9) {
+                    let input = document.createElement('input');
+                    input.id = "blueInput";
+                    input.value = 0;
+                    input.maxlength = "2";
+                    input.size = "2";
+                    cell.appendChild(input);
+                } else if (j == 10) {
+                    let label = document.createElement('label');
+                    label.innerHTML = "-";
                     label.id = player + "_" + i + "_" + j;
                     cell.appendChild(label);
-            } else if (j==11){
-                let input = document.createElement('input');
-                input.id = "penInput";
-                input.value = 0;
-                input.maxlength="2";
-                input.size="2";
-                cell.appendChild(input);
-            } else if (j == 12){
-                let button = document.createElement('button');
+                } else if (j == 11) {
+                    let input = document.createElement('input');
+                    input.id = "penInput";
+                    input.value = 0;
+                    input.maxlength = "2";
+                    input.size = "2";
+                    cell.appendChild(input);
+                } else if (j == 12) {
+                    let button = document.createElement('button');
                     button.innerHTML = "=";
                     button.id = "calcScore";
                     button.addEventListener("click", calcScore);
                     cell.appendChild(button);
-            } else if (j == 13){
-                let label = document.createElement('label');
-                label.innerHTML = "total";
+                } else if (j == 13) {
+                    let label = document.createElement('label');
+                    label.innerHTML = "total";
                     label.id = "scoreTotal";
                     cell.appendChild(label);
-            }
-            row.appendChild(cell);
+                }
+                row.appendChild(cell);
             }
         }
     }
-    document.getElementById('player' + player).appendChild(myScoreCard);
+    document.getElementById('position' + position).appendChild(myName);
+    document.getElementById('position' + position).appendChild(myScoreCard);
 }
 
-function calcScore(){
+function calcScore() {
     let redTotal = document.getElementById('redInput');
     let yelTotal = document.getElementById('yelInput');
     let greenTotal = document.getElementById('greenInput');
@@ -192,7 +247,7 @@ function calcScore(){
     let penTotal = document.getElementById('penInput');
     let scoreTotal = document.getElementById('scoreTotal');
 
-    scoreTotal.innerHTML = parseInt(redTotal.value)  +parseInt(yelTotal.value) + parseInt(greenTotal.value) + parseInt(blueTotal.value) - parseInt(penTotal.value);
+    scoreTotal.innerHTML = parseInt(redTotal.value) + parseInt(yelTotal.value) + parseInt(greenTotal.value) + parseInt(blueTotal.value) - parseInt(penTotal.value);
 
 }
 
@@ -219,17 +274,17 @@ function markButton() {
     let player = idParts[0];
     let i = idParts[1];
     let j = idParts[2];
-        if (this.innerHTML == "X") {
-            this.innerHTML = buttonText(i, j);
-            reverseMove(this.id);
-            socket.emit('unMarks', id);
-        } else {
-            this.innerHTML = "X";
-            hideSkips(this.id);
-            socket.emit('marks', id);
-        }
-    
-    
+    if (this.innerHTML == "X") {
+        this.innerHTML = buttonText(i, j);
+        reverseMove(this.id);
+        socket.emit('unMarks', id);
+    } else {
+        this.innerHTML = "X";
+        hideSkips(this.id);
+        socket.emit('marks', id);
+    }
+
+
 
 }
 
@@ -238,7 +293,7 @@ function hideSkips(id) {
     player = idParts[0];
     i = idParts[1];
     j = idParts[2];
-    if (i < 4){
+    if (i < 4) {
         for (j = idParts[2]; j > 1; j--) {
             let button = document.getElementById(player + '_' + i + '_' + j);
             if (button.innerHTML == 'X') {
@@ -246,10 +301,10 @@ function hideSkips(id) {
             } else {
                 button.style.visibility = "hidden";
             }
-    
+
         }
     }
-    
+
 }
 
 function reverseMove(id) {
@@ -257,7 +312,7 @@ function reverseMove(id) {
     player = idParts[0];
     i = idParts[1];
     j = idParts[2];
-    if (i < 4){ 
+    if (i < 4) {
         for (j = idParts[2] - 1; j > 1; j--) {
             let button = document.getElementById(player + '_' + i + '_' + j);
             if (button.innerHTML == 'X') {
@@ -265,7 +320,7 @@ function reverseMove(id) {
             } else {
                 button.style.visibility = "visible";
             }
-    
+
         }
     }
 

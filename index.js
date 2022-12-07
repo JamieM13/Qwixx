@@ -14,9 +14,21 @@ server.listen(port, () => {
 let io = require('socket.io');
 io = new io.Server(server);
 
+let playerNum = 1;
+
 //Listen for individual clients/users to connect
 io.sockets.on('connection', function(socket) {
     console.log("We have a new client: " + socket.id);
+    socket.playerNum = playerNum;
+    let yourNum = socket.playerNum;
+    console.log(playerNum);
+    socket.emit('yourNum', yourNum);
+    playerNum++;
+    if (playerNum > 4){
+        playerNum = 1;
+    }
+
+
     // io.sockets.emit('msg', socket.id);
 
     //Listen for a message named 'msg' from this client
@@ -50,6 +62,10 @@ io.sockets.on('connection', function(socket) {
         io.sockets.emit('updateUnMarks',id);
         console.log("unmark me");
     });
+
+    socket.on('names', function(data){
+        socket.broadcast.emit('updateNames', data);
+    })
 
 
     //Listen for this client to disconnect

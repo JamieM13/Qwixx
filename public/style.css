@@ -62,6 +62,17 @@
 .buttonGroup {
     display: flex;
     flex-direction: column;
+    
+}
+
+.rollDice {
+    width: 150px;
+    background-color:purple;
+    color: whitesmoke;
+}
+
+.redInput {
+    color: lightcoral;
 }
 
 table {
@@ -83,7 +94,7 @@ table {
   td {
     justify-items: space-around;
     padding-inline: 5px;
-    
+
   }
 
   .redRow {
